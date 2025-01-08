@@ -1,14 +1,18 @@
 import BookItem from './BookItem'
 
 export default function BookList(books) {
-  const booklist = books.books
-  console.log(booklist)
+  const bookList = books.books
 
   return (
     <div>
-      <BookItem />
-      <BookItem />
-      <BookItem />
+      {bookList.map((book) => (
+        <BookItem
+          key={book.id}
+          id={book.id}
+          title={book.title}
+          author={book.author}
+        />
+      ))}
     </div>
   )
 }

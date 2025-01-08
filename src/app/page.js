@@ -3,20 +3,20 @@ import BookList from '@/components/BookList'
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
 
+const FIND_BOOKS = gql`
+  query BookList {
+    findAllBooks {
+      id
+      title
+      author
+    }
+  }
+`
 async function getBookList() {
   const client = createApolloClient()
   const { data } = await client.query({
-    query: gql`
-      query BookList {
-        findAllBooks {
-          id
-          title
-          author
-        }
-      }
-    `,
+    query: FIND_BOOKS,
   })
-
   return data.findAllBooks
 }
 
