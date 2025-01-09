@@ -9,6 +9,7 @@ const FIND_BOOKS = gql`
       id
       title
       author
+      rating
     }
   }
 `
