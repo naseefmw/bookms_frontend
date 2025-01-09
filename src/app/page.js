@@ -1,7 +1,7 @@
-import styles from './page.module.css'
-import BookList from '@/components/BookList'
+import BookList from '@/components/Home/BookList'
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
+import AddBooks from '@/components/Home/AddBooks'
 
 const FIND_BOOKS = gql`
   query BookList {
@@ -24,7 +24,8 @@ async function getBookList() {
 export default async function Home() {
   const books = await getBookList()
   return (
-    <div className={styles.page}>
+    <div>
+      <AddBooks />
       <BookList books={books} />
     </div>
   )
