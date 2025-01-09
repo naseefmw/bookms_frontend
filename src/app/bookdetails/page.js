@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
+import getGoogleBooksInfo from '@/services/googlebooksapi'
 
 const BOOK_DETAILS = gql`
   query BookDetails($id: ID!) {
@@ -26,17 +27,26 @@ async function getBookDetails(id) {
 export default async function BookDetails({ searchParams }) {
   const { id } = await searchParams
   const bookDetails = await getBookDetails(id)
+  const moreDetails = await getGoogleBooksInfo(bookDetails.isbn)
   return (
-    <div>
-      title: {bookDetails.title} <br />
-      author: {bookDetails.author} <br />
-      pub_date: {bookDetails.pub_date} <br />
-      isbn: {bookDetails.isbn} <br />
-      rating: {bookDetails.rating}
+    <>
+      <div>
+        title: {bookDetails.title} <br />
+        author: {bookDetails.author} <br />
+        pub_date: {bookDetails.pub_date} <br />
+        isbn: {bookDetails.isbn} <br />
+        rating: {bookDetails.rating}
+        <br />
+        genre: {bookDetails.genre}
+        <br />
+        image: {bookDetails.image}
+      </div>
       <br />
-      genre: {bookDetails.genre}
-      <br />
-      image: {bookDetails.image}
-    </div>
+      <div>
+        More Details
+        <br />
+        {moreDetails.description}
+      </div>
+    </>
   )
 }
