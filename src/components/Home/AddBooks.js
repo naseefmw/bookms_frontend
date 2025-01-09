@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
+import BookForm from './BookForm'
 
 export default function AddBooks() {
   const [show, setShow] = useState(false)
@@ -11,17 +12,16 @@ export default function AddBooks() {
   return (
     <>
       <Button onClick={handleShow}>Add Book</Button>
-      <Modal show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} fullscreen="md-down" centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Book</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Enter book details</Modal.Body>
+        <Modal.Body>
+          <BookForm />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
