@@ -34,16 +34,26 @@ const ADD_BOOK = gql`
 export default function BookForm({ close }) {
   const client = createApolloClient()
   const router = useRouter()
+  const [validated, setValidated] = useState(false)
 
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
-  const [pub_date, setPubDate] = useState(new Date().toISOString().slice(0, 10))
+  const [pub_date, setPubDate] = useState(
+    new Date('2000-01-01').toISOString().slice(0, 10)
+  )
   const [isbn, setIsbn] = useState(0)
   const [rating, setRating] = useState('3')
   const [genre, setGenre] = useState('')
   const [image, setImage] = useState('')
 
   async function onSubmit(event) {
+    const form = event.currentTarget
+    if (form.checkValidity() === false) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    setValidated(true)
+
     event.preventDefault()
     const { data } = await client.mutate({
       mutation: ADD_BOOK,
@@ -66,6 +76,9 @@ export default function BookForm({ close }) {
       <Form.Group className="mb-3" controlId="formTitle">
         <Form.Label>Title</Form.Label>
         <Form.Control
+          required
+          minLength="1"
+          maxLength="100"
           type="text"
           placeholder="Enter book title"
           value={title}
@@ -75,6 +88,9 @@ export default function BookForm({ close }) {
       <Form.Group className="mb-3" controlId="formAuthor">
         <Form.Label>Author</Form.Label>
         <Form.Control
+          required
+          minLength="1"
+          maxLength="50"
           type="text"
           placeholder="Enter author name"
           value={author}
@@ -84,6 +100,7 @@ export default function BookForm({ close }) {
       <Form.Group className="mb-3" controlId="formDate">
         <Form.Label>Publication Date</Form.Label>
         <Form.Control
+          required
           type="date"
           value={pub_date}
           onChange={({ target }) => setPubDate(target.value)}
@@ -92,6 +109,9 @@ export default function BookForm({ close }) {
       <Form.Group className="mb-3" controlId="formIsbn">
         <Form.Label>ISBN</Form.Label>
         <Form.Control
+          required
+          min="1000000000000"
+          max="9999999999999"
           type="number"
           placeholder="Enter ISBN"
           value={isbn}
@@ -101,12 +121,13 @@ export default function BookForm({ close }) {
       <Form.Group className="mb-3" controlId="formRating">
         <Form.Label>Rating</Form.Label>
         <Form.Range
+          required
           min="1"
           max="5"
           value={rating}
           onChange={({ target }) => setRating(target.value)}
         />
-        5
+        {rating}
       </Form.Group>
       <Form.Group className="mb-3" controlId="formGenre">
         <Form.Label>Genre</Form.Label>
@@ -114,7 +135,7 @@ export default function BookForm({ close }) {
           value={genre}
           onChange={({ target }) => setGenre(target.value)}
         >
-          <option value="">None</option>
+          <option value="">Select genre</option>
           <option value="Fiction">Fiction</option>
           <option value="Non-Fiction">Non-Fiction</option>
           <option value="Mystery">Mystery</option>
