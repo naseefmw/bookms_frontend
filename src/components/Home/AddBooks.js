@@ -17,7 +17,7 @@ export default function AddBooks() {
           <Modal.Title>Add Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <BookForm />
+          <BookForm close={handleClose} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

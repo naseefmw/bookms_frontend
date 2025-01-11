@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
 import { Button } from 'react-bootstrap'
+import { useRouter } from 'next/navigation'
 
 const DELETE_BOOK = gql`
   mutation DeleteBook($id: ID!) {
@@ -14,6 +15,7 @@ const DELETE_BOOK = gql`
 
 export default function BookItem({ id, title, author, rating }) {
   const client = createApolloClient()
+  const router = useRouter()
 
   async function onDelete(event) {
     event.preventDefault()
@@ -24,6 +26,7 @@ export default function BookItem({ id, title, author, rating }) {
       },
     })
     console.log(data)
+    router.refresh()
   }
   return (
     <tr>

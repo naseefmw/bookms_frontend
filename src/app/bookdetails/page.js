@@ -45,7 +45,7 @@ export default async function BookDetails({ searchParams }) {
       <div>
         More Details
         <br />
-        {moreDetails.description}
+        {moreDetails ? moreDetails.description : null}
       </div>
     </>
   )

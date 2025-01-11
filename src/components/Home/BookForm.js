@@ -3,6 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import { gql } from '@apollo/client'
 import { useState } from 'react'
 import createApolloClient from '@/services/apollo-client'
+import { useRouter } from 'next/navigation'
 
 const ADD_BOOK = gql`
   mutation AddBook(
@@ -30,8 +31,9 @@ const ADD_BOOK = gql`
   }
 `
 
-export default function BookForm() {
+export default function BookForm({ close }) {
   const client = createApolloClient()
+  const router = useRouter()
 
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -56,6 +58,8 @@ export default function BookForm() {
       },
     })
     console.log(data)
+    close()
+    router.refresh()
   }
   return (
     <Form onSubmit={onSubmit}>
