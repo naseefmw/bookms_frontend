@@ -5,10 +5,17 @@ import { useEffect, useState } from 'react'
 import MyPagination from './Pagination'
 
 export default function BookList(books) {
+  const [page, setPage] = useState(1)
+  const pageLimit = 10
   useEffect(() => {
     setBookList(books.books)
+    setBooksCount(books.books.length)
+    if (page > Math.ceil(books.books.length / pageLimit)) {
+      setPage(page - 1)
+    }
   }, [books])
   const [bookList, setBookList] = useState(books.books)
+  const [booksCount, setBooksCount] = useState(books.books.length)
   const [asc, setAsc] = useState(1)
 
   const sortByTitle = () => {
@@ -75,7 +82,9 @@ export default function BookList(books) {
     setAsc(!asc)
     setBookList(sorted)
   }
-
+  const handleChangePage = (p) => {
+    setPage(p)
+  }
   return (
     <div>
       <Table striped bordered hover size="sm">
@@ -95,18 +104,30 @@ export default function BookList(books) {
           </tr>
         </thead>
         <tbody>
-          {bookList.map((book) => (
-            <BookItem
-              key={book.id}
-              id={book.id}
-              title={book.title}
-              author={book.author}
-              rating={book.rating}
-            />
-          ))}
+          {bookList
+            .slice(
+              (page - 1) * pageLimit,
+              (page - 1) * pageLimit + pageLimit < booksCount
+                ? (page - 1) * pageLimit + pageLimit
+                : booksCount
+            )
+            .map((book) => (
+              <BookItem
+                key={book.id}
+                id={book.id}
+                title={book.title}
+                author={book.author}
+                rating={book.rating}
+              />
+            ))}
         </tbody>
       </Table>
-      <MyPagination />
+      <MyPagination
+        N={booksCount}
+        active={page}
+        onChangePage={handleChangePage}
+        pageLimit={pageLimit}
+      />
     </div>
   )
 }
