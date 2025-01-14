@@ -67,7 +67,7 @@ export default function BookForm({ close }) {
         image: image,
       },
     })
-    console.log(data)
+    //console.log(data)
     router.refresh()
     close()
   }
