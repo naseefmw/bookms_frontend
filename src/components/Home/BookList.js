@@ -90,17 +90,25 @@ export default function BookList(books) {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>
+            <th className="titlecolumn">
               Title
-              <Button onClick={() => sortByTitle()}>⇅</Button>
+              <Button variant="link" onClick={() => sortByTitle()}>
+                ⇅
+              </Button>
             </th>
             <th>
-              Author <Button onClick={() => sortByAuthor()}>⇅</Button>
+              Author{' '}
+              <Button variant="link" onClick={() => sortByAuthor()}>
+                ⇅
+              </Button>
             </th>
             <th>
-              Rating <Button onClick={() => sortByRating()}>⇅</Button>
+              ⭐{' '}
+              <Button variant="link" onClick={() => sortByRating()}>
+                ⇅
+              </Button>
             </th>
-            <th>🗑️</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>

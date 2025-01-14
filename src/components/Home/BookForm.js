@@ -68,8 +68,8 @@ export default function BookForm({ close }) {
       },
     })
     console.log(data)
-    close()
     router.refresh()
+    close()
   }
   return (
     <Form onSubmit={onSubmit}>

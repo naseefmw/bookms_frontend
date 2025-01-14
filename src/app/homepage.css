@@ -1,0 +1,17 @@
+.mainpagetitle {
+  text-align: center;
+  padding-top: 1%;
+  background-color: #fbfbf2;
+}
+
+.addbutton {
+  margin-left: 1%;
+}
+
+th {
+  vertical-align: middle;
+}
+
+.titlecolumn {
+  width: 35%;
+}

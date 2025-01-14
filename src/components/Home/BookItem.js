@@ -44,7 +44,7 @@ export default function BookItem({ id, title, author, rating }) {
       <td>{rating}</td>
       <td>
         <Button variant="danger" onClick={onDelete}>
-          Delete
+          🗑️
         </Button>
       </td>
     </tr>

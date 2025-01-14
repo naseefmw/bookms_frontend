@@ -11,7 +11,9 @@ export default function AddBooks() {
 
   return (
     <>
-      <Button onClick={handleShow}>Add Book</Button>
+      <Button className="addbutton" onClick={handleShow}>
+        Add Book
+      </Button>
       <Modal show={show} onHide={handleClose} fullscreen="md-down" centered>
         <Modal.Header closeButton>
           <Modal.Title>Add Book</Modal.Title>
