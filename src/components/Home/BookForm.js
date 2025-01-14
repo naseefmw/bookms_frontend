@@ -68,6 +68,7 @@ export default function BookForm({ close }) {
       },
     })
     //console.log(data)
+    client.resetStore()
     router.refresh()
     close()
   }

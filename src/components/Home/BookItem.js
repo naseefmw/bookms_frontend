@@ -25,7 +25,8 @@ export default function BookItem({ id, title, author, rating }) {
         id: id,
       },
     })
-    console.log(data)
+    //console.log(data)
+    client.resetStore()
     router.refresh()
   }
   return (
