@@ -8,5 +8,6 @@ export default async function getGoogleBooksInfo(isbn) {
     return bookInfo.items[0].volumeInfo
   } catch (e) {
     console.log(e)
+    return { error: 'Invalid ISBN' }
   }
 }

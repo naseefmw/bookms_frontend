@@ -1,6 +1,11 @@
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
 import getGoogleBooksInfo from '@/services/googlebooksapi'
+import BookTitleCard from '@/components/Details/BookTitleCard'
+import './book.css'
+import BookTabs from '@/components/Details/BookTabs'
+import { Button } from 'react-bootstrap'
+import Link from 'next/link'
 
 const BOOK_DETAILS = gql`
   query BookDetails($id: ID!) {
@@ -31,22 +36,10 @@ export default async function BookDetails({ searchParams }) {
   return (
     <>
       <div>
-        title: {bookDetails.title} <br />
-        author: {bookDetails.author} <br />
-        pub_date: {bookDetails.pub_date} <br />
-        isbn: {bookDetails.isbn} <br />
-        rating: {bookDetails.rating}
-        <br />
-        genre: {bookDetails.genre}
-        <br />
-        image: {bookDetails.image}
+        <Link href={{ pathname: '/' }}>Back to BookList</Link>
       </div>
-      <br />
-      <div>
-        More Details
-        <br />
-        {moreDetails ? moreDetails.description : null}
-      </div>
+      <BookTitleCard title={bookDetails.title} image={bookDetails.image} />
+      <BookTabs book={bookDetails} moreInfo={moreDetails} />
     </>
   )
 }
