@@ -6,9 +6,9 @@ export default async function getGoogleBooksInfo(isbn) {
 
   try {
     const bookInfo = await data.json()
-    return bookInfo.items[0].volumeInfo
+    const result = bookInfo.items[0].volumeInfo
+    return result
   } catch (e) {
-    console.log(e)
     return { error: 'Invalid ISBN' }
   }
 }
