@@ -1,4 +1,5 @@
-const baseUrl = 'http://localhost:8080/gbooks/'
+const API_URL = process.env.API_URL
+const baseUrl = `${API_URL}/gbooks/`
 
 export default async function getGoogleBooksInfo(isbn) {
   const data = await fetch(`${baseUrl}${isbn}`)

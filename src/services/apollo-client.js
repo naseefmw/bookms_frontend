@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
+const API_URL = process.env.API_URL
 
 const createApolloClient = () => {
   return new ApolloClient({
-    uri: 'http://localhost:8080/graphql',
+    uri: `${API_URL}/graphql`,
     cache: new InMemoryCache(),
   })
 }
