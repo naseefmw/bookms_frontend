@@ -1,8 +1,10 @@
+'use client'
 import BookList from '@/components/Home/BookList'
 import { gql } from '@apollo/client'
 import createApolloClient from '@/services/apollo-client'
-import AddBooks from '@/components/Home/AddBooks'
 import './homepage.css'
+import { useEffect, useState } from 'react'
+import AddBooks from '@/components/Home/AddBooks'
 
 const FIND_BOOKS = gql`
   query BookList {
@@ -19,16 +21,23 @@ async function getBookList() {
   const { data } = await client.query({
     query: FIND_BOOKS,
   })
-  return data.findAllBooks
+  const result = data.findAllBooks
+  return result
 }
 
-export default async function Home() {
-  const books = await getBookList()
+export default function Home() {
+  const [bookList, setBookList] = useState([])
+  useEffect(() => {
+    getBookList().then((books) => {
+      setBookList(books)
+    })
+  }, [])
+  //console.log(bookList)
   return (
     <div>
       <h2 className="mainpagetitle">BookList</h2>
-      <AddBooks />
-      <BookList books={books} />
+      <AddBooks setBookList={setBookList} bookList={bookList} />
+      <BookList bookList={bookList} setBookList={setBookList} />
     </div>
   )
 }

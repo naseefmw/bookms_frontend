@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import BookForm from './BookForm'
 
-export default function AddBooks() {
+export default function AddBooks({ bookList, setBookList }) {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -19,7 +19,11 @@ export default function AddBooks() {
           <Modal.Title>Add Book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <BookForm close={handleClose} />
+          <BookForm
+            close={handleClose}
+            setBookList={setBookList}
+            bookList={bookList}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

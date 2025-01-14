@@ -3,19 +3,21 @@ import BookItem from './BookItem'
 import { Table, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import MyPagination from './Pagination'
+import AddBooks from './AddBooks'
 
-export default function BookList(books) {
+export default function BookList({ bookList, setBookList }) {
   const [page, setPage] = useState(1)
+  const [booksCount, setBooksCount] = useState(0)
   const pageLimit = 10
   useEffect(() => {
-    setBookList(books.books)
-    setBooksCount(books.books.length)
-    if (page > Math.ceil(books.books.length / pageLimit)) {
-      setPage(page - 1)
+    if (bookList) {
+      setBooksCount(bookList.length)
+      if (page > Math.ceil(bookList.length / pageLimit) && page > 1) {
+        setPage(page - 1)
+      }
     }
-  }, [books])
-  const [bookList, setBookList] = useState(books.books)
-  const [booksCount, setBooksCount] = useState(books.books.length)
+  }, [bookList])
+
   const [asc, setAsc] = useState(1)
 
   const sortByTitle = () => {
@@ -113,21 +115,25 @@ export default function BookList(books) {
         </thead>
         <tbody>
           {bookList
-            .slice(
-              (page - 1) * pageLimit,
-              (page - 1) * pageLimit + pageLimit < booksCount
-                ? (page - 1) * pageLimit + pageLimit
-                : booksCount
-            )
-            .map((book) => (
-              <BookItem
-                key={book.id}
-                id={book.id}
-                title={book.title}
-                author={book.author}
-                rating={book.rating}
-              />
-            ))}
+            ? bookList
+                .slice(
+                  (page - 1) * pageLimit,
+                  (page - 1) * pageLimit + pageLimit < booksCount
+                    ? (page - 1) * pageLimit + pageLimit
+                    : booksCount
+                )
+                .map((book) => (
+                  <BookItem
+                    key={book.id}
+                    id={book.id}
+                    title={book.title}
+                    author={book.author}
+                    rating={book.rating}
+                    setBookList={setBookList}
+                    bookList={bookList}
+                  />
+                ))
+            : null}
         </tbody>
       </Table>
       <MyPagination

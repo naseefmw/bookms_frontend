@@ -27,11 +27,14 @@ const ADD_BOOK = gql`
       }
     ) {
       id
+      title
+      author
+      rating
     }
   }
 `
 
-export default function BookForm({ close }) {
+export default function BookForm({ close, setBookList, bookList }) {
   const client = createApolloClient()
   const router = useRouter()
   const [validated, setValidated] = useState(false)
@@ -67,9 +70,8 @@ export default function BookForm({ close }) {
         image: image,
       },
     })
-    //console.log(data)
-    client.resetStore()
-    router.refresh()
+
+    setBookList([...bookList, data.addBook])
     close()
   }
   return (

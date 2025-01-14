@@ -8,14 +8,20 @@ import { useRouter } from 'next/navigation'
 const DELETE_BOOK = gql`
   mutation DeleteBook($id: ID!) {
     deleteBook(id: $id) {
-      title
+      id
     }
   }
 `
 
-export default function BookItem({ id, title, author, rating }) {
+export default function BookItem({
+  id,
+  title,
+  author,
+  rating,
+  setBookList,
+  bookList,
+}) {
   const client = createApolloClient()
-  const router = useRouter()
 
   async function onDelete(event) {
     event.preventDefault()
@@ -25,9 +31,8 @@ export default function BookItem({ id, title, author, rating }) {
         id: id,
       },
     })
-    //console.log(data)
-    client.resetStore()
-    router.refresh()
+    const deletedId = data.deleteBook.id
+    setBookList(bookList.filter((book) => book.id !== deletedId))
   }
   return (
     <tr>
